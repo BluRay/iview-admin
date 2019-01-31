@@ -1,5 +1,5 @@
 import Main from '@/components/main'
-import parentView from '@/components/parent-view'
+// import parentView from '@/components/parent-view'
 
 /**
  * iview-admin中meta除了原生参数外可配置的参数:
@@ -50,34 +50,7 @@ export default [
       }
     ]
   },
-  {
-    path: '',
-    name: 'doc',
-    meta: {
-      title: '文档',
-      href: 'https://lison16.github.io/iview-admin-doc/#/',
-      icon: 'ios-book'
-    }
-  },
-  {
-    path: '/join',
-    name: 'join',
-    component: Main,
-    meta: {
-      hideInBread: true
-    },
-    children: [
-      {
-        path: 'join_page',
-        name: 'join_page',
-        meta: {
-          icon: '_qq',
-          title: 'QQ群'
-        },
-        component: () => import('@/view/join-page.vue')
-      }
-    ]
-  },
+  /**
   {
     path: '/message',
     name: 'message',
@@ -97,7 +70,7 @@ export default [
         component: () => import('@/view/single-page/message/index.vue')
       }
     ]
-  },
+  }, */
   {
     path: '/components',
     name: 'components',
@@ -378,66 +351,6 @@ export default [
           title: '指令'
         },
         component: () => import('@/view/directive/directive.vue')
-      }
-    ]
-  },
-  {
-    path: '/multilevel',
-    name: 'multilevel',
-    meta: {
-      icon: 'md-menu',
-      title: '多级菜单'
-    },
-    component: Main,
-    children: [
-      {
-        path: 'level_2_1',
-        name: 'level_2_1',
-        meta: {
-          icon: 'md-funnel',
-          title: '二级-1'
-        },
-        component: () => import('@/view/multilevel/level-2-1.vue')
-      },
-      {
-        path: 'level_2_2',
-        name: 'level_2_2',
-        meta: {
-          access: ['super_admin'],
-          icon: 'md-funnel',
-          showAlways: true,
-          title: '二级-2'
-        },
-        component: parentView,
-        children: [
-          {
-            path: 'level_2_2_1',
-            name: 'level_2_2_1',
-            meta: {
-              icon: 'md-funnel',
-              title: '三级'
-            },
-            component: () => import('@/view/multilevel/level-2-2/level-2-2-1.vue')
-          },
-          {
-            path: 'level_2_2_2',
-            name: 'level_2_2_2',
-            meta: {
-              icon: 'md-funnel',
-              title: '三级'
-            },
-            component: () => import('@/view/multilevel/level-2-2/level-2-2-2.vue')
-          }
-        ]
-      },
-      {
-        path: 'level_2_3',
-        name: 'level_2_3',
-        meta: {
-          icon: 'md-funnel',
-          title: '二级-3'
-        },
-        component: () => import('@/view/multilevel/level-2-3.vue')
       }
     ]
   },

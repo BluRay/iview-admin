@@ -11,7 +11,7 @@ export default {
   name: 'iview_test',
   data () {
     return {
-      msg: 'iview-test'
+      msg: 'iview-test!!'
     }
   },
   mounted () {
