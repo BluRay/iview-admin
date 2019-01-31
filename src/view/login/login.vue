@@ -8,7 +8,7 @@
       <Card icon="log-in" title="欢迎登录" :bordered="false">
         <div class="form-con">
           <login-form @on-success-valid="handleSubmit"></login-form>
-          <p class="login-tip">输入任意用户名和密码即可</p>
+          <p class="login-tip">{{msg}}</p>
         </div>
       </Card>
     </div>
@@ -22,6 +22,11 @@ export default {
   components: {
     LoginForm
   },
+  data () {
+    return {
+      msg: 'Welcome to Your Vue.js App!!!~~'
+    }
+  },
   methods: {
     ...mapActions([
       'handleLogin',
@@ -34,6 +39,7 @@ export default {
             name: this.$config.homeName
           })
         })
+        // .catch(error => this.msg = '登录失败！请重新登录。')
       })
     }
   }

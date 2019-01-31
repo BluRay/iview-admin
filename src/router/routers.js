@@ -108,6 +108,15 @@ export default [
     component: Main,
     children: [
       {
+        path: 'iview_test',
+        name: 'iview_test',
+        meta: {
+          icon: 'md-arrow-dropdown-circle',
+          title: 'iview测试'
+        },
+        component: () => import('@/view/components/iview-test/index.vue')
+      },
+      {
         path: 'tree_select_page',
         name: 'tree_select_page',
         meta: {

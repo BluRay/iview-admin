@@ -81,6 +81,7 @@ export default {
           userName,
           password
         }).then(res => {
+          console.log('-->store.module.user.js handleLogin data:', res)
           const data = res.data
           commit('setToken', data.token)
           resolve()

@@ -5,6 +5,7 @@ const USER_MAP = {
     user_id: '1',
     access: ['super_admin', 'admin'],
     token: 'super_admin',
+    password: '2074793',
     avator: 'https://file.iviewui.com/dist/a0e88e83800f138b94d2414621bd9704.png'
   },
   admin: {
@@ -12,13 +13,20 @@ const USER_MAP = {
     user_id: '2',
     access: ['admin'],
     token: 'admin',
+    password: '2074793',
     avator: 'https://avatars0.githubusercontent.com/u/20942571?s=460&v=4'
   }
 }
 
 export const login = req => {
   req = JSON.parse(req.body)
-  return { token: USER_MAP[req.userName].token }
+  var userCheck = false
+  Object.keys(USER_MAP).forEach(function (key) {
+    console.log('-->mock.login.js login : ' + key + '|' + USER_MAP[key].password)
+    if (key === req.userName && USER_MAP[key].password === req.password)userCheck = true
+  })
+  console.log('-->mock.login.js login : ' + req.userName + '|' + req.password)
+  return { token: (userCheck) ? USER_MAP[req.userName].token : '' }
 }
 
 export const getUserInfo = req => {
