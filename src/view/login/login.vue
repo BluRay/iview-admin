@@ -24,7 +24,7 @@ export default {
   },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App!!!~~'
+      msg: 'Welcome to Your iView App!!!'
     }
   },
   methods: {
@@ -38,8 +38,11 @@ export default {
           this.$router.push({
             name: this.$config.homeName
           })
+        }).catch(error => {
+          if (error) {
+            this.msg = '登录失败！请重新登录。'
+          }
         })
-        // .catch(error => this.msg = '登录失败！请重新登录。')
       })
     }
   }
