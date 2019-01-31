@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Row :gutter="20">
-        <h2>{{msg}}</h2>
-    </Row>
+    <Card shadow>
+      <span>{{msg}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<Button type="primary" @click="btnConfirm">确定</Button>
+    </Card>
     </div>
 </template>
 <script>
@@ -12,6 +12,11 @@ export default {
   data () {
     return {
       msg: 'iview-test!!'
+    }
+  },
+  methods: {
+    btnConfirm () {
+      console.log('-->iView-test btnConfirm')
     }
   },
   mounted () {
