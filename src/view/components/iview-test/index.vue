@@ -1,33 +1,86 @@
 <template>
   <div>
-    <Card shadow>
-      <span>{{msg}}</span>&nbsp;&nbsp;&nbsp;&nbsp;<Button type="primary" @click="btnConfirm">确定</Button>
+    <Card>
+      <tables ref="tables" editable v-model="tableData" :columns="columns" @on-delete="handleDelete"/>
+      <br/>
+      <Page :total="dataCount" :page-size="pageSize" show-total show-elevator class="paging" @on-change="changepage"></Page>
+
     </Card>
-    </div>
+  </div>
 </template>
+
 <script>
-import axios from '@/libs/api.request'
+import Tables from '_c/tables'
+import { getTableData } from '@/api/data'
 export default {
-  name: 'iview_test',
+  name: 'tables_page',
+  components: {
+    Tables
+  },
   data () {
     return {
-      msg: 'iview-test!!'
+      columns: [
+        { title: 'Name', key: 'name', sortable: true },
+        { title: 'Email', key: 'email', editable: true },
+        { title: 'Create-Time', key: 'createTime' },
+        {
+          title: 'Handle',
+          key: 'handle',
+          options: ['delete'],
+          button: [
+            (h, params, vm) => {
+              return h('Poptip', {
+                props: {
+                  confirm: true,
+                  title: '你确定要删除吗?'
+                },
+                on: {
+                  'on-ok': () => {
+                    vm.$emit('on-delete', params)
+                    vm.$emit('input', params.tableData.filter((item, index) => index !== params.row.initRowIndex))
+                  }
+                }
+              }, [
+                h('Button', '自定义删除')
+              ])
+            }
+          ]
+        }
+      ],
+      // 初始化信息总条数
+      dataCount: 0,
+      // 每页显示多少条
+      pageSize: 6,
+      tableData: [],
+      totalData: []
     }
   },
   methods: {
-    btnConfirm () {
-      console.log('-->iView-test btnConfirm')
+    handleDelete (params) {
+      console.log(params)
+    },
+    changepage (index) {
+      var _start = (index - 1) * this.pageSize
+      var _end = index * this.pageSize
+      this.tableData = this.totalData.slice(_start, _end)
     }
   },
   mounted () {
-    console.log('-->init')
-    axios.request({
-      url: '/common/getPlantList?werks=C160',
-      method: 'get'
-    }).then(response => {
-      console.log('---->success:', response.data.list[0].PLANT_NAME)
-      // this.msg = response.data.list[0].PLANT_NAME;
+    getTableData().then(res => {
+      this.totalData = res.data
+      this.tableData = res.data
+      this.dataCount = res.data.length
+      // 初始化显示，小于每页显示条数，全显，大于每页显示条数，取前每页条数显示
+      if (res.data.length < this.pageSize) {
+        this.tableData = res.data
+      } else {
+        this.tableData = res.data.slice(0, this.pageSize)
+      }
     })
   }
 }
 </script>
+
+<style>
+
+</style>
