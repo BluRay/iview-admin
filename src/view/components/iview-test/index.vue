@@ -1,7 +1,7 @@
 <template>
   <div>
     <Card>
-      <tables ref="tables" editable v-model="tableData" :columns="columns" @on-delete="handleDelete"/>
+      <tables ref="selection" editable v-model="tableData" :columns="columns" @on-delete="handleDelete" @on-select="selectItem"/>
       <br/>
       <Page :total="dataCount" :page-size="pageSize" show-total show-elevator class="paging" @on-change="changepage"></Page>
 
@@ -20,11 +20,13 @@ export default {
   data () {
     return {
       columns: [
-        { title: 'Name', key: 'name', sortable: true },
-        { title: 'Email', key: 'email', editable: true },
-        { title: 'Create-Time', key: 'createTime' },
+        { type: 'selection', width: 60, align: 'center' },
+        { title: '序号', key: 'index', width: '120px', editable: false },
+        { title: '姓名', key: 'name', sortable: true },
+        { title: '邮箱', key: 'email', editable: true },
+        { title: '日期', key: 'createTime' },
         {
-          title: 'Handle',
+          title: '操作',
           key: 'handle',
           options: ['delete'],
           button: [
@@ -63,6 +65,9 @@ export default {
       var _start = (index - 1) * this.pageSize
       var _end = index * this.pageSize
       this.tableData = this.totalData.slice(_start, _end)
+    },
+    selectItem () {
+
     }
   },
   mounted () {
