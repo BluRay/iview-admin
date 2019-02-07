@@ -1,10 +1,11 @@
 <template>
   <div>
     <Card>
-      <tables ref="selection" editable v-model="tableData" :columns="columns" @on-delete="handleDelete" @on-select="selectItem"/>
+      <tables ref="selection" stripe editable v-model="tableData" :columns="columns" @on-save-edit="handleSave"
+      @on-delete="handleDelete" @on-select="selectItem"/>
       <br/>
-      <Page :total="dataCount" :page-size="pageSize" show-total show-elevator class="paging" @on-change="changepage"></Page>
-
+      <Page :total="dataCount" :page-size="pageSize" show-total show-elevator class="paging"
+      @on-change="changepage"></Page>
     </Card>
   </div>
 </template>
@@ -13,7 +14,7 @@
 import Tables from '_c/tables'
 import { getTableData } from '@/api/data'
 export default {
-  name: 'tables_page',
+  name: 'iview_test',
   components: {
     Tables
   },
@@ -24,7 +25,7 @@ export default {
         { title: '序号', key: 'index', width: '120px', editable: false },
         { title: '姓名', key: 'name', sortable: true },
         { title: '邮箱', key: 'email', editable: true },
-        { title: '日期', key: 'createTime' },
+        { title: '日期', key: 'createTime', editable: true },
         {
           title: '操作',
           key: 'handle',
@@ -66,14 +67,19 @@ export default {
       var _end = index * this.pageSize
       this.tableData = this.totalData.slice(_start, _end)
     },
-    selectItem () {
-
+    selectItem (selection, row) {
+      console.log('-->selection', selection)
+      console.log('-->row', row)
+    },
+    handleSave (params) {
+      console.log('-->handleSave index:' + params.row.index + ',key:' + params.column.key)
+      console.log('-->handleSave', params)
     }
+
   },
   mounted () {
     getTableData().then(res => {
       this.totalData = res.data
-      this.tableData = res.data
       this.dataCount = res.data.length
       // 初始化显示，小于每页显示条数，全显，大于每页显示条数，取前每页条数显示
       if (res.data.length < this.pageSize) {
