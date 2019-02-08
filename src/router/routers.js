@@ -84,7 +84,7 @@ export default [
         path: 'iview_test',
         name: 'iview_test',
         meta: {
-          icon: 'md-arrow-dropdown-circle',
+          icon: 'ios-game-controller-b',
           title: 'iview测试'
         },
         component: () => import('@/view/components/iview-test/index.vue')

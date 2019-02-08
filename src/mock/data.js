@@ -6,7 +6,7 @@ const Random = Mock.Random
 
 export const getTableData = req => {
   let tableData = []
-  doCustomTimes(25, () => {
+  doCustomTimes(105, () => {
     tableData.push(Mock.mock({
       index: '@increment',
       name: '@name',
