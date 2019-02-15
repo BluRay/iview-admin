@@ -8,10 +8,10 @@
     </Card>
     <br/>
     <Card>
-      <tables ref="selection" stripe editable v-model="tableData" :columns="columns" @on-save-edit="handleSave"
+      <tables :loading="loading" ref="selection" stripe editable v-model="tableData" :columns="columns" @on-save-edit="handleSave"
       @on-delete="handleDelete" @on-select="selectItem"/>
       <br/>
-      <Page :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging"
+      <Page :current="current" :total="dataCount" :page-size="pageSize" show-total show-elevator show-sizer class="paging"
       @on-change="changepage" @on-page-size-change="changPapeSize"></Page>
     </Card>
   </div>
@@ -28,6 +28,8 @@ export default {
   },
   data () {
     return {
+      loading: false,
+      current: 1,
       columns: [
         { type: 'selection', width: 60, align: 'center' },
         { title: '序号', key: 'index', width: '120px', editable: false },
@@ -74,12 +76,12 @@ export default {
     changepage (index) {
       var _start = (index - 1) * this.pageSize
       var _end = index * this.pageSize
+      this.current = index
       this.tableData = this.totalData.slice(_start, _end)
     },
     changPapeSize (pageSize) {
       this.pageSize = pageSize
       this.changepage(1)
-      console.log(this.pageSize)
     },
     selectItem (selection, row) {
       console.log('-->selection', selection)
@@ -91,6 +93,8 @@ export default {
     },
     btn_query () {
       console.log('-->btn_query search_name :: ' + this.search_name)
+      this.loading = true
+      this.current = 1
       getTableData().then(res => {
         this.totalData = res.data
         this.dataCount = res.data.length
@@ -99,6 +103,7 @@ export default {
         } else {
           this.tableData = res.data.slice(0, this.pageSize)
         }
+        this.loading = false
       })
     },
     btn_add () {
